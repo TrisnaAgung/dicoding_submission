@@ -1,0 +1,77 @@
+{
+  "data":
+    [
+      {
+        "id": 1,
+        "path": "assets/images/ui.png",
+        "title":"Universitas Indonesia", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 2,
+        "path": "assets/images/itb.png",
+        "title":"Institut Teknologi Bandung", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 3,
+        "path": "assets/images/ugm.png",
+        "title":"Universitas Gadjah Mada", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 4,
+        "path": "assets/images/ipb.png",
+        "title":"Institut Pertanian Bogor", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 5,
+        "path": "assets/images/unair.png",
+        "title":"Universitas Airlangga", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 6,
+        "path": "assets/images/unpad.png",
+        "title":"Universitas Padjadjaran", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 7,
+        "path": "assets/images/its.png",
+        "title":"Institut Teknologi Sepuluh Nopember", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 8,
+        "path": "assets/images/undip.png",
+        "title":"Universitas Diponegoro", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 9,
+        "path": "assets/images/ub.png",
+        "title":"Universitas Brawijaya", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 10,
+        "path": "assets/images/unhas.png",
+        "title":"Universitas Hasanuddin", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 11,
+        "path": "assets/images/telkom.png",
+        "title":"Universitas Telkom", 
+        "content":"Ini kontent"
+      },
+      {
+        "id": 12,
+        "path": "assets/images/unud.png",
+        "title":"Universitas Udayana", 
+        "content":"Ini kontent"
+      }
+    ]
+}
