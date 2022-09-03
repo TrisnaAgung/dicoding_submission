@@ -10,21 +10,24 @@ extension DetailStatusX on DetailStatus {
 }
 
 class DetailState extends Equatable {
-  final bool like;
+  final bool fav;
+  final bool first;
   final DetailStatus status;
 
-  DetailState({required this.like, required this.status});
+  DetailState({required this.fav, required this.first, required this.status});
 
   @override
   // TODO: implement props
-  List<Object> get props => [like, status];
+  List<Object> get props => [fav, first, status];
 
   DetailState copyWith({
-    required bool like,
+    required bool fav,
+    required bool first,
     required DetailStatus status,
   }) {
     return DetailState(
-      like: like,
+      fav: fav,
+      first: first,
       status: status,
     );
   }

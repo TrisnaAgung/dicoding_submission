@@ -1,5 +1,5 @@
-import 'package:dicoding_submission/ui/daftar_like/pages/daftar_like_view.dart';
-import 'package:dicoding_submission/ui/daftar_like/widgets/bloc/daftar_like_bloc.dart';
+import 'package:dicoding_submission/ui/daftar_favorite/pages/daftar_favorite_view.dart';
+import 'package:dicoding_submission/ui/daftar_favorite/widgets/bloc/daftar_favorite_bloc.dart';
 import 'package:dicoding_submission/ui/home/pages/home_item.dart';
 import 'package:dicoding_submission/ui/home/widgets/bloc/home_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,11 +43,12 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BlocProvider<DaftarLikeBloc>(
-                            create: (context) => DaftarLikeBloc()
+                          builder: (context) =>
+                              BlocProvider<DaftarFavoriteBloc>(
+                            create: (context) => DaftarFavoriteBloc()
                               ..add(InitialDaftar(
                                   dataUniv: state.data, loginData: loginData)),
-                            child: DaftarLikePage(
+                            child: DaftarFavoritePage(
                               dataUniv: state.data,
                               loginData: loginData,
                             ),

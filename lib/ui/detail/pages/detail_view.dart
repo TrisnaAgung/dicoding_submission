@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,8 +19,9 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  bool like = false;
-  bool showLike = false;
+  bool favorite = false;
+  bool showFav = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -32,14 +34,22 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<DetailBloc, DetailState>(
       listener: (context, state) {
-        print(state);
         if (state.status.isSuccess) {
-          like = state.like;
-          showLike = true;
+          favorite = state.fav;
+          showFav = true;
+
+          if (!state.first) {
+            _scaffoldKey.currentState?.showSnackBar(SnackBar(
+              content: Text(((favorite)
+                  ? "Berhasil Menambahkan ke Daftar Favorite"
+                  : "Berhasil Menghapus dari Daftar Favorite")),
+            ));
+          }
         }
       },
       builder: (context, state) {
         return Scaffold(
+          key: _scaffoldKey,
           appBar: AppBar(
             title: Text(
               widget.dataUniv.title,
@@ -54,16 +64,16 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ),
           floatingActionButton: Visibility(
-            visible: showLike,
+            visible: showFav,
             child: FloatingActionButton(
               onPressed: () async {
-                context.read<DetailBloc>().add(LikeDetail(
+                context.read<DetailBloc>().add(FavoriteDetail(
                     dataUniv: widget.dataUniv,
                     loginData: widget.loginData,
-                    like: like));
+                    fav: favorite));
               },
               backgroundColor: Colors.white,
-              child: (like)
+              child: (favorite)
                   ? Icon(
                       Icons.favorite,
                       color: Colors.pink,
@@ -89,7 +99,33 @@ class _DetailPageState extends State<DetailPage> {
         ),
       );
     } else {
-      return Container();
+      return SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  child: Image.asset(
+                    widget.dataUniv.path,
+                    height: 250,
+                  ),
+                ),
+                Container(
+                  child: Html(
+                    data: widget.dataUniv.content,
+                    style: {
+                      "p": Style.fromTextStyle(GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              fontSize: 18, color: Colors.grey[850]))),
+                      "body": Style(margin: EdgeInsets.all(0)),
+                    },
+                  ),
+                ),
+              ],
+            )),
+      );
     }
   }
 }

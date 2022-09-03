@@ -1,6 +1,6 @@
 import 'package:dicoding_submission/repository/models/dataUniversitas.dart';
-import 'package:dicoding_submission/ui/daftar_like/pages/daftar_like_item.dart';
-import 'package:dicoding_submission/ui/daftar_like/widgets/bloc/daftar_like_bloc.dart';
+import 'package:dicoding_submission/ui/daftar_favorite/pages/daftar_favorite_item.dart';
+import 'package:dicoding_submission/ui/daftar_favorite/widgets/bloc/daftar_favorite_bloc.dart';
 import 'package:dicoding_submission/ui/home/pages/home_item.dart';
 import 'package:dicoding_submission/ui/home/widgets/bloc/home_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,8 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DaftarLikePage extends StatelessWidget {
-  const DaftarLikePage(
+class DaftarFavoritePage extends StatelessWidget {
+  const DaftarFavoritePage(
       {Key? key, required this.loginData, required this.dataUniv})
       : super(key: key);
   final List<DataUniv> dataUniv;
@@ -23,7 +23,7 @@ class DaftarLikePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Daftar Like",
+          "Daftar Favorite",
           style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black)),
         ),
         centerTitle: true,
@@ -33,7 +33,7 @@ class DaftarLikePage extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      body: BlocBuilder<DaftarLikeBloc, DaftarLikeState>(
+      body: BlocBuilder<DaftarFavoriteBloc, DaftarFavoriteState>(
         builder: (context, state) {
           if (state.status.isLoading) {
             return Container(
@@ -75,13 +75,13 @@ class DaftarLikePage extends StatelessWidget {
                     ),
                   ),
                   onRefresh: () async {
-                    context.read<DaftarLikeBloc>().add(RefreshDaftar(
+                    context.read<DaftarFavoriteBloc>().add(RefreshDaftar(
                         dataUniv: state.data, loginData: loginData));
                   });
             } else {
               return RefreshIndicator(
                 onRefresh: () async {
-                  context.read<DaftarLikeBloc>().add(RefreshDaftar(
+                  context.read<DaftarFavoriteBloc>().add(RefreshDaftar(
                       dataUniv: state.data, loginData: loginData));
                 },
                 child: SingleChildScrollView(
@@ -93,7 +93,7 @@ class DaftarLikePage extends StatelessWidget {
                         itemCount:
                             state.data.length == null ? 0 : state.data.length,
                         itemBuilder: (context, index) {
-                          return DaftarLikeItem(
+                          return DaftarFavoriteItem(
                             dataUniv: state.data,
                             context: context,
                             dataUniversitas: state.data[index],

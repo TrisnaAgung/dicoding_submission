@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -59,7 +60,7 @@ class HomeItem extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    margin: EdgeInsets.only(left: 10),
+                    margin: EdgeInsets.only(left: 10, right: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -71,11 +72,17 @@ class HomeItem extends StatelessWidget {
                                   color: Colors.grey[850],
                                   fontWeight: FontWeight.bold)),
                         ),
-                        Text(
-                          dataUniversitas.content,
-                          style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                  fontSize: 12, color: Colors.grey[850])),
+                        Html(
+                          data: (dataUniversitas.content.length > 310)
+                              ? dataUniversitas.content.substring(0, 310) +
+                                  "...."
+                              : dataUniversitas.content,
+                          style: {
+                            "p": Style.fromTextStyle(GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    fontSize: 12, color: Colors.grey[850]))),
+                            "body": Style(margin: EdgeInsets.all(0)),
+                          },
                         ),
                       ],
                     ),

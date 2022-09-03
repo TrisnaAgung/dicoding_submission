@@ -14,14 +14,14 @@ class InitialDetail extends DetailEvent {
   List<Object> get props => [dataUniv, loginData];
 }
 
-class LikeDetail extends DetailEvent {
+class FavoriteDetail extends DetailEvent {
   final DataUniv dataUniv;
   final SharedPreferences loginData;
-  final bool like;
+  final bool fav;
 
-  LikeDetail(
-      {required this.dataUniv, required this.loginData, required this.like});
+  FavoriteDetail(
+      {required this.dataUniv, required this.loginData, required this.fav});
 
   @override
-  List<Object> get props => [dataUniv, loginData, like];
+  List<Object> get props => [dataUniv, loginData, fav];
 }

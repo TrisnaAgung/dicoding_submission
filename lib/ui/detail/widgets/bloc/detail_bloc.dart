@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:dicoding_submission/repository/models/dataLike.dart';
+import 'package:dicoding_submission/repository/models/dataFavorite.dart';
 import 'package:dicoding_submission/repository/models/dataUniversitas.dart';
 import 'package:dicoding_submission/ui/home/widgets/bloc/home_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -12,65 +12,76 @@ part 'detail_event.dart';
 part 'detail_state.dart';
 
 class DetailBloc extends Bloc<DetailEvent, DetailState> {
-  DetailBloc() : super(DetailState(like: false, status: DetailStatus.initial)) {
+  DetailBloc()
+      : super(DetailState(
+            fav: false, first: true, status: DetailStatus.initial)) {
     on<InitialDetail>((event, emit) async {
       try {
-        emit(state.copyWith(like: false, status: DetailStatus.loading));
+        emit(state.copyWith(
+            fav: false, first: true, status: DetailStatus.loading));
         await Future.delayed(Duration(seconds: 1)).then((_) async {
-          var like = event.loginData.getString("like");
+          var fav = event.loginData.getString("favorite");
 
-          if (like != null && like != "") {
-            DataLike dataLike = DataLike.fromJson(jsonDecode(like));
+          if (fav != null && fav != "") {
+            DataFavorite dataFavorite = DataFavorite.fromJson(jsonDecode(fav));
 
-            final indexLike = dataLike.data
+            final indexFav = dataFavorite.data
                 .indexWhere((element) => element.id == event.dataUniv.id);
 
-            if (indexLike != -1) {
-              emit(state.copyWith(like: true, status: DetailStatus.success));
+            if (indexFav != -1) {
+              emit(state.copyWith(
+                  fav: true, first: true, status: DetailStatus.success));
             } else {
-              emit(state.copyWith(like: false, status: DetailStatus.success));
+              emit(state.copyWith(
+                  fav: false, first: true, status: DetailStatus.success));
             }
           } else {
-            emit(state.copyWith(like: false, status: DetailStatus.success));
+            emit(state.copyWith(
+                fav: false, first: true, status: DetailStatus.success));
           }
         });
       } catch (error) {
-        emit(state.copyWith(like: false, status: DetailStatus.error));
+        emit(state.copyWith(
+            fav: false, first: true, status: DetailStatus.error));
       }
     });
 
-    on<LikeDetail>((event, emit) async {
+    on<FavoriteDetail>((event, emit) async {
       try {
-        emit(state.copyWith(like: event.like, status: DetailStatus.success));
-        var like = event.loginData.getString("like");
-        bool likeValue = event.like;
+        emit(state.copyWith(
+            fav: event.fav, first: true, status: DetailStatus.success));
+        var fav = event.loginData.getString("favorite");
+        bool favValue = event.fav;
 
-        if (like != null && like != "") {
-          DataLike dataLike = DataLike.fromJson(jsonDecode(like));
-          if (!event.like) {
-            likeValue = true;
-            Datum datum = Datum(id: event.dataUniv.id, like: true);
-            dataLike.data.add(datum);
+        if (fav != null && fav != "") {
+          DataFavorite dataFavorite = DataFavorite.fromJson(jsonDecode(fav));
+          if (!event.fav) {
+            favValue = true;
+            Datum datum = Datum(id: event.dataUniv.id, favorite: true);
+            dataFavorite.data.add(datum);
           } else {
-            likeValue = false;
-            final indexLike = dataLike.data
+            favValue = false;
+            final indexFav = dataFavorite.data
                 .indexWhere((element) => element.id == event.dataUniv.id);
-            if (indexLike != -1) {
-              dataLike.data.removeAt(indexLike);
+            if (indexFav != -1) {
+              dataFavorite.data.removeAt(indexFav);
             }
           }
-          event.loginData.setString("like", jsonEncode(dataLike));
-          emit(state.copyWith(like: likeValue, status: DetailStatus.success));
+          event.loginData.setString("favorite", jsonEncode(dataFavorite));
+          emit(state.copyWith(
+              fav: favValue, first: false, status: DetailStatus.success));
         } else {
-          List<Datum> listLike = [];
-          Datum datum = Datum(id: event.dataUniv.id, like: true);
-          listLike.add(datum);
-          DataLike dataLike = DataLike(data: listLike);
-          event.loginData.setString("like", jsonEncode(dataLike));
-          emit(state.copyWith(like: true, status: DetailStatus.success));
+          List<Datum> listFav = [];
+          Datum datum = Datum(id: event.dataUniv.id, favorite: true);
+          listFav.add(datum);
+          DataFavorite dataFavorite = DataFavorite(data: listFav);
+          event.loginData.setString("favorite", jsonEncode(dataFavorite));
+          emit(state.copyWith(
+              fav: true, first: false, status: DetailStatus.success));
         }
       } catch (error) {
-        emit(state.copyWith(like: false, status: DetailStatus.error));
+        emit(state.copyWith(
+            fav: false, first: true, status: DetailStatus.error));
       }
     });
   }

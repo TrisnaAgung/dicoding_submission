@@ -1,10 +1,10 @@
-part of 'daftar_like_bloc.dart';
+part of 'daftar_favorite_bloc.dart';
 
-abstract class DaftarLikeEvent extends Equatable {
-  const DaftarLikeEvent();
+abstract class DaftarFavoriteEvent extends Equatable {
+  const DaftarFavoriteEvent();
 }
 
-class InitialDaftar extends DaftarLikeEvent {
+class InitialDaftar extends DaftarFavoriteEvent {
   final List<DataUniv> dataUniv;
   final SharedPreferences loginData;
 
@@ -14,7 +14,7 @@ class InitialDaftar extends DaftarLikeEvent {
   List<Object> get props => [dataUniv, loginData];
 }
 
-class RefreshDaftar extends DaftarLikeEvent {
+class RefreshDaftar extends DaftarFavoriteEvent {
   final List<DataUniv> dataUniv;
   final SharedPreferences loginData;
 

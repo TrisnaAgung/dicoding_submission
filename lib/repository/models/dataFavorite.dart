@@ -1,21 +1,22 @@
 // To parse this JSON data, do
 //
-//     final dataLike = dataLikeFromJson(jsonString);
+//     final dataFavorite = dataFavoriteFromJson(jsonString);
 
 import 'dart:convert';
 
-DataLike dataLikeFromJson(String str) => DataLike.fromJson(json.decode(str));
+DataFavorite dataFavoriteFromJson(String str) =>
+    DataFavorite.fromJson(json.decode(str));
 
-String dataLikeToJson(DataLike data) => json.encode(data.toJson());
+String dataFavoriteToJson(DataFavorite data) => json.encode(data.toJson());
 
-class DataLike {
-  DataLike({
+class DataFavorite {
+  DataFavorite({
     required this.data,
   });
 
   List<Datum> data;
 
-  factory DataLike.fromJson(Map<String, dynamic> json) => DataLike(
+  factory DataFavorite.fromJson(Map<String, dynamic> json) => DataFavorite(
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
 
@@ -27,19 +28,19 @@ class DataLike {
 class Datum {
   Datum({
     required this.id,
-    required this.like,
+    required this.favorite,
   });
 
   int id;
-  bool like;
+  bool favorite;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        like: json["like"],
+        favorite: json["favorite"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "like": like,
+        "favorite": favorite,
       };
 }

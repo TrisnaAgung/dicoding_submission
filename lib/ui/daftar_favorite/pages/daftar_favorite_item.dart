@@ -1,16 +1,17 @@
 import 'package:dicoding_submission/repository/models/dataUniversitas.dart';
-import 'package:dicoding_submission/ui/daftar_like/widgets/bloc/daftar_like_bloc.dart';
+import 'package:dicoding_submission/ui/daftar_favorite/widgets/bloc/daftar_favorite_bloc.dart';
 import 'package:dicoding_submission/ui/detail/pages/detail_view.dart';
 import 'package:dicoding_submission/ui/detail/widgets/bloc/detail_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DaftarLikeItem extends StatelessWidget {
-  const DaftarLikeItem(
+class DaftarFavoriteItem extends StatelessWidget {
+  const DaftarFavoriteItem(
       {Key? key,
       required this.dataUniversitas,
       required this.loginData,
@@ -38,7 +39,7 @@ class DaftarLikeItem extends StatelessWidget {
             ),
           ),
         ).then((value) => context
-            .read<DaftarLikeBloc>()
+            .read<DaftarFavoriteBloc>()
             .add(RefreshDaftar(dataUniv: dataUniv, loginData: loginData)));
       },
       child: Padding(
@@ -68,7 +69,7 @@ class DaftarLikeItem extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    margin: EdgeInsets.only(left: 10),
+                    margin: EdgeInsets.only(left: 10, right: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -80,11 +81,17 @@ class DaftarLikeItem extends StatelessWidget {
                                   color: Colors.grey[850],
                                   fontWeight: FontWeight.bold)),
                         ),
-                        Text(
-                          dataUniversitas.content,
-                          style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                  fontSize: 12, color: Colors.grey[850])),
+                        Html(
+                          data: (dataUniversitas.content.length > 310)
+                              ? dataUniversitas.content.substring(0, 310) +
+                                  "...."
+                              : dataUniversitas.content,
+                          style: {
+                            "p": Style.fromTextStyle(GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    fontSize: 12, color: Colors.grey[850]))),
+                            "body": Style(margin: EdgeInsets.all(0)),
+                          },
                         ),
                       ],
                     ),
